@@ -47,7 +47,10 @@ def jogar():
         enforcou=erros==tentativas
         print(letras_certas)
 
-
+    if enforcou:
+        print("Você perdeu")
+    else:
+        print("Você ganhou")
     print("Fim do jogo")
 
 if(__name__ == "__main__"):
