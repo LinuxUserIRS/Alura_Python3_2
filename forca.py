@@ -1,15 +1,29 @@
+from random import randint
 def jogar():
     print("*********************************")
     print("***Bem vindo ao jogo da Forca!***")
     print("*********************************")
 
-    palavra_secreta = "treta"
-    palavra_secreta=palavra_secreta.lower()
-    letras_certas = ['_' for letra in palavra_secreta]
+#Abre o arquivo com a palvra secreta e lê a palavra
+    archive = open('secret_word.txt', 'r')
+    palavra_secreta = []
+#Salva todas as palavras em uma lista
+    with open('secret_word.txt', 'r') as archive:
+        for line in archive:
+            linha = line.strip()
+            palavra_secreta.append(linha)
+#Escolhe aleatoriamente qual palavra vai ser usada
+    chosen_word = randint(0, len(palavra_secreta))
+
+    tentativas = len(palavra_secreta)
+#Põe todas as letras em minúsculo para facilitar a leitura
+    secret_word = palavra_secreta[chosen_word].lower()
+#Cria uma lista preenchida com underscores para fins estéticos
+    letras_certas = ['_' for letra in secret_word]
     erros=0
     print(letras_certas)
 
-
+#Variáveis para controle do loop
     enforcou = False
     acertou = False
 
@@ -18,20 +32,20 @@ def jogar():
         chute = input("Qual letra? ")
         chute = chute.strip().lower()
 
-
-        if chute in palavra_secreta:
+#Checa se chute está presente na string
+        if chute in secret_word:
             index = 0
-            for letra in palavra_secreta:
+#Checa em quais posições a letra faz parte da string e substitui na lista de underscores na posição adequada
+            for letra in secret_word:
                 if(chute == letra):
                     letras_certas[index]=letra
                 index+=1
-            print(letras_certas)
             if '_' not in letras_certas:
                 acertou=True
         else:
             erros+=1
-        enforcou=erros==6
-
+        enforcou=erros==tentativas
+        print(letras_certas)
 
 
     print("Fim do jogo")
